@@ -52,10 +52,10 @@ module "ec2_private-nexus" {
   version = "5.6.0"
   
   name                   = "${var.environment}-nexus"
-  ami                    = data.aws_ami.amzlinux2.id
-  instance_type          = var.instance_type
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.large"
   key_name               = var.instance_keypair
-  user_data = file("${path.module}/scripts/nexus.sh")
+  user_data = file("${path.module}/scripts/docker.sh")
   tags = local.common_tags
 
 
@@ -84,7 +84,7 @@ module "ec2_private-sonarqube" {
   
   name                   = "${var.environment}-sonarqube"
   ami                    = data.aws_ami.ubuntu.id
-  instance_type          = var.instance_type # use docker
+  instance_type          = "t3.large" # use docker
   key_name               = var.instance_keypair
   user_data = file("${path.module}/scripts/docker.sh")
   tags = local.common_tags
